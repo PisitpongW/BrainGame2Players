@@ -9,7 +9,6 @@ public class TimeController : MonoBehaviour
     public static float timeStart;
     public float timeSet;
 	public static bool isTimeSet = false;
-	public static bool isPlaying = false;
     public Text timeCountText;
 
 	public CanvasGroup startCanvas;
@@ -22,30 +21,17 @@ public class TimeController : MonoBehaviour
     {
 		print("timeController start");
 		if(timeSet > 0) isTimeSet = true;
-
-		startCanvas.alpha = 1;
-		startCanvas.interactable = true;
-		startCanvas.blocksRaycasts = true;
     }
 
 	void Update()
 	{
-		if(isTimeSet && isPlaying)
+		if(isTimeSet == true && GameController.isPlaying == true) // Game running
 		{
 			timeCountText.text = (timeSet-(Time.time-timeStart)).ToString("00");
 			if(timeSet-(Time.time-timeStart) < 0)
 			{
 				timeOut();
 			}
-		}
-		if(isPlaying == false && Input.anyKey)
-		{
-			print("Press key to start");
-			isPlaying = true;
-			timeStart = Time.time;
-			startCanvas.alpha = 0;
-			startCanvas.interactable = false;
-			startCanvas.blocksRaycasts = false;
 		}
 	}
 
@@ -74,6 +60,6 @@ public class TimeController : MonoBehaviour
 		endCanvas.alpha = 1;
 		endCanvas.interactable = true;
 		endCanvas.blocksRaycasts = true;
-		isPlaying = false;
+		GameController.isPlaying = false;
 	}
 }

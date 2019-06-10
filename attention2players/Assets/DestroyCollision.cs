@@ -10,7 +10,8 @@ public class DestroyCollision : MonoBehaviour
 		if(other.tag=="Wall" || other.tag=="Player" || other.tag=="Midball")
 		{
 			Instantiate(explosion, transform.position, transform.rotation);
-			Destroy(gameObject);
+			//Destroy(gameObject);
+			gameObject.SetActive(false);
 		}
 	}
 }
