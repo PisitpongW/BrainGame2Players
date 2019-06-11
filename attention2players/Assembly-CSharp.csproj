@@ -87,6 +87,7 @@
      <Compile Include="Assets\PlayerLeftMovement.cs" />
      <Compile Include="Assets\PlayerRightMovement.cs" />
      <Compile Include="Assets\RandomRotator.cs" />
+     <Compile Include="Assets\ReadUDP.cs" />
      <Compile Include="Assets\TimeController.cs" />
      <None Include="Assets\Models\Low Poly Christmas Pack\Low Poly Christmas Pack\Support me.txt" />
      <None Include="Assets\Models\LowPoly_WinterScene\Readme.txt" />
