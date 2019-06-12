@@ -2926,6 +2926,10 @@ MonoBehaviour:
   leftPlayer: {fileID: 562370643}
   rightPlayer: {fileID: 600032129}
   midBall: {fileID: 1966815844}
+  rnLeftPlayer: {fileID: 562370646}
+  rnRightPlayer: {fileID: 600032132}
+  orangeMat: {fileID: 2100000, guid: 178e913b2481af9489c589a760a7594e, type: 2}
+  cyanMat: {fileID: 2100000, guid: 935bc8de8489f4d4c8b77851788bb3cb, type: 2}
 --- !u!4 &151382578
 Transform:
   m_ObjectHideFlags: 0
@@ -5787,7 +5791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerLeft: {fileID: 562370648}
-  offset: {x: 8, y: 4, z: -12}
+  offset: {x: 9, y: 4, z: -12}
 --- !u!20 &282840813
 Camera:
   m_ObjectHideFlags: 0
@@ -5831,7 +5835,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 282840810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 150.03, y: 4, z: -15.49}
+  m_LocalPosition: {x: 151, y: 4, z: -15.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10703,7 +10707,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 562370643}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 142, y: 2, z: -2}
+  m_LocalPosition: {x: 141, y: 2, z: -2}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10725,6 +10729,9 @@ MonoBehaviour:
   b: {x: 0, y: 0, z: 0}
   v: 7
   j: 8
+  data1: 0
+  data2: 0
+  dataDiff: 0
 --- !u!114 &562370650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11655,7 +11662,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 600032129}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 158, y: 2, z: -2}
+  m_LocalPosition: {x: 159, y: 2, z: -2}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children: []
   m_Father: {fileID: 0}
@@ -11678,9 +11685,12 @@ MonoBehaviour:
   b: {x: 0, y: 0, z: 0}
   ltran: {x: 0, y: 0, z: 0}
   rtran: {x: 0, y: 0, z: 0}
-  centerDist: 8
+  centerDist: 9
   v: 7
   j: 8
+  data1: 0
+  data2: 0
+  dataDiff: 0
 --- !u!114 &600032136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31903,6 +31913,9 @@ MonoBehaviour:
   data2hex: 
   data1float: 0
   data2float: 0
+  con: 0
+  vFactor: 5
+  aFactor: 0.5
 --- !u!4 &1651558578
 Transform:
   m_ObjectHideFlags: 0
@@ -37821,6 +37834,8 @@ MonoBehaviour:
   endText: {fileID: 2099752175}
   playerText: {fileID: 1506589076}
   showText: {fileID: 1888090152}
+  leftPlayer: {fileID: 0}
+  rightPlayer: {fileID: 0}
   midBall: {fileID: 1966815846}
 --- !u!4 &1912735869
 Transform:
@@ -39257,8 +39272,8 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1966815844}
   serializedVersion: 2
-  m_Mass: 0.0000001
-  m_Drag: 10
+  m_Mass: 1
+  m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -39341,16 +39356,16 @@ MonoBehaviour:
   b: {x: 0, y: 0, z: 0}
   ltran: {x: 0, y: 0, z: 0}
   mtran: {x: 0, y: 0, z: 0}
+  newForce: {x: 0, y: 0, z: 0}
   centerDist: 8
-  centerVelo: 0
-  centerDiff: 0
+  dataDiff: 0
   data1: 0
   data2: 0
-  factor1: 0
-  factor2: 0
   v: 7
   j: 8
   tumble: 20
+  con1: 99
+  con2: 99
   con: 0
 --- !u!114 &1966815852
 MonoBehaviour:

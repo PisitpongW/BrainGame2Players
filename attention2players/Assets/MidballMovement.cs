@@ -6,10 +6,11 @@ public class MidballMovement : MonoBehaviour
 {
 	public Rigidbody rb;
 	public Rigidbody playerLeft;
-	public Vector3 a, b, ltran, mtran;
+	public Vector3 a, b, ltran, mtran, newForce;
 	private ReadUDP readUDP;
-	public float centerDist, centerVelo, centerDiff, data1, data2, factor1, factor2;
+	public float centerDist, dataDiff, data1, data2;
 	public float v, j, tumble;
+	public float con1 = 99f, con2 = 99f;
 	public int con = 0;
 	void Start()
 	{
@@ -26,54 +27,50 @@ public class MidballMovement : MonoBehaviour
 	}
 	void Update () 
 	{
-		if(GameObject.Find("Player Left")!=null && GameObject.Find("Player Right")!=null)
+		if(GameController.isPlaying == true && GameObject.Find("Player Left")!=null && GameObject.Find("Player Right")!=null)
 		{
-			//Movement1();
-
-			//Movement2();
-
-			MidballMove();
+			Movement();
+			//MidballMove();
 		}
 	}
-	void Movement1()
+	void Movement()
 	{
-		ltran = playerLeft.transform.position;
-		mtran = rb.transform.position;
-
-		data1 = readUDP.data1float;	// Ref data1 from UDP
-		data2 = readUDP.data2float; // Ref data2 from UDP
-		centerDiff = data1 - data2; // Different power
-
-		// Position setting
-		centerDist = (centerDiff)*factor1;  // *** Power scaling with using range ***
-
-		mtran.x = ltran.x + centerDist; // Set distance from Left Player
-		rb.transform.position = mtran;
-
-		// Rotation setting
-		b = rb.angularVelocity;
-		if(centerDiff > 0) {b.z = -tumble; rb.angularVelocity = b;}
-		else if(centerDiff < 0) {b.z = tumble; rb.angularVelocity = b;}
-		else {b.z = 0; rb.angularVelocity = b;}
-	}
-	void Movement2()
-	{
-		data1 = readUDP.data1float;	// Ref data1 from UDP
-		data2 = readUDP.data2float; // Ref data2 from UDP
-		centerDiff = data1 - data2; // Different power
+		if(GameController.phase == 1)
+		{
+			data1 = readUDP.data1float;
+			data2 = readUDP.data2float;
+		}
+		else if(GameController.phase == 2)
+		{
+			data1 = readUDP.data2float;
+			data2 = readUDP.data1float;
+		}
+		dataDiff = data1 - data2;
 
 		// Velocity setting
 		a = rb.velocity;
 		a.z = 0f;
-		float centerVelo = (centerDiff)*factor2; // *** Power scaling with using range ***
-		a.x = centerVelo; // Set velocity of Midball
+		if(data1 != con1 || data2 != con2)
+		{
+			if(dataDiff > 0)
+				a.x = dataDiff + readUDP.vFactor;
+			else if(dataDiff < 0)
+				a.x = dataDiff -readUDP.vFactor;
+			else
+				a.x = dataDiff;
+		}
+		newForce = new Vector3(dataDiff * readUDP.aFactor, 0f, 0f);
+		rb.AddForce(newForce, ForceMode.Acceleration);
 		rb.velocity = a;
 
 		// Rotation setting
 		b = rb.angularVelocity;
-		if(centerDiff > 0) {b.z = -tumble; rb.angularVelocity = b;}
-		else if(centerDiff < 0) {b.z = tumble; rb.angularVelocity = b;}
+		if(dataDiff > 0) {b.z = -tumble; rb.angularVelocity = b;}
+		else if(dataDiff < 0) {b.z = tumble; rb.angularVelocity = b;}
 		else {b.z = 0; rb.angularVelocity = b;}
+
+		con1 = data1;
+		con2 = data2;
 	}
 	void MidballMove()
 	{

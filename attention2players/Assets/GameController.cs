@@ -11,12 +11,26 @@ public class GameController : MonoBehaviour
 	public Text endText, playerText, showText, buttonText;
 	public Rigidbody rbLeftPlayer, rbRightPlayer, rbMidBall;
 	public GameObject leftPlayer, rightPlayer, midBall;
+	public Renderer rnLeftPlayer, rnRightPlayer;
 	public static Vector3 ltran, lVelocity, lAngular, rtran, rVelocity, rAngular, mtran, mVelocity, mAngular;
 	public static int phase, con = 0;
+	private MidballMovement midballMovement;
+
+	public Material orangeMat, cyanMat;
 
 	void Start()
 	{
 		print("Control start");
+
+		GameObject checkGameObject = GameObject.FindGameObjectWithTag ("Midball");
+        if (checkGameObject != null)
+        {
+            midballMovement = checkGameObject.GetComponent <MidballMovement>();
+        }
+        if (midballMovement == null)
+        {
+            Debug.Log("Cannot find 'ReadUDP' script");
+        }
 		phase = 1;
 
 		ltran = leftPlayer.transform.position;
@@ -110,37 +124,85 @@ public class GameController : MonoBehaviour
 	
 	void GameOverCheck()
 	{
-		if(isPlaying == true && (GameObject.Find("Player Left") == null || GameObject.Find("Player Right") == null) && con == 0 && phase != 0)
+		if(isPlaying==true && (GameObject.Find("Player Left")==null||GameObject.Find("Player Right")==null||TimeController.isTimeout==true) && con==0 && phase!=0)
 		{
-			print("Game end");
 			con = 1;
 			StartCoroutine(HoldPlay());
 		}
 	}
 	public IEnumerator HoldPlay()
 	{
-		yield return new WaitForSeconds(2f);
+		if(TimeController.isTimeout == false) 
+			yield return new WaitForSeconds(2f);
 		EnableEndCanvas();
 		isPlaying = false;
-		endText.text = ">>GAME OVER<<";
 
-		if(GameObject.Find("Player Left") == null) playerText.text = "PLAYER 2";
-		else if(GameObject.Find("Player Right") == null) playerText.text = "PLAYER 1";
+		if(TimeController.isTimeout == true)
+			timeoutShow();
+		else	
+			gameoverShow();
 
-		showText.text = "W I N";
 		if(phase == 1)
 		{
 			print("Go Round 2");
 			buttonText.text = "ROUND 2";
+
+			midballMovement.con1 = 99f;
+			midballMovement.con2 = 99f;
+
+			rnLeftPlayer.material = cyanMat;
+			rnRightPlayer.material = orangeMat;
+
 			phase = 2;
 		}
 		else if(phase == 2)
 		{
 			print("Go Round 1");
 			buttonText.text = "PLAY AGAIN";
+
+			midballMovement.con1 = 99f;
+			midballMovement.con2 = 99f;
+
+			rnLeftPlayer.material = orangeMat;
+			rnRightPlayer.material = cyanMat;
+
 			phase = 3;
 		}
 		con = 0;
+	}
+
+	void gameoverShow()
+	{
+		print("Game over");
+		endText.text = ">>GAME OVER<<";
+		if(GameObject.Find("Player Left") == null) playerText.text = "PLAYER 2";
+		else if(GameObject.Find("Player Right") == null) playerText.text = "PLAYER 1";
+		showText.text = "W I N";
+	}
+
+	void timeoutShow()
+	{
+		print("Time out");
+		endText.text = ">>TIME OUT<<";
+		if(GameObject.Find("Midball") != null)
+		{
+			if(midBall.transform.position.x < 150)
+			{
+				playerText.text = "PLAYER 2";
+				showText.text = "W I N";
+			}
+			else if(midBall.transform.position.x > 150)
+			{
+				playerText.text = "PLAYER 1";
+				showText.text = "W I N";
+			}
+			else
+			{
+				playerText.text = "DRAW";
+				showText.text = "---";
+			}
+		}
+		TimeController.isTimeout = false;
 	}
 	
 	void EnableStartCanvas()

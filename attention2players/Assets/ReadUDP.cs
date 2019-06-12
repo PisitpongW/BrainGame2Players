@@ -24,10 +24,9 @@ public class ReadUDP : MonoBehaviour
 	private bool onReceive = true;
 
 	private float timeshift = 0;
-	public string data1hex;
-	public string data2hex;
-	public float data1float;
-	public float data2float;
+	public string data1hex, data2hex;
+	public float data1float, data2float, con;
+	public float vFactor, aFactor;
 	Encoding utf8 = Encoding.UTF8;
 	void Start () 
 	{
@@ -72,6 +71,7 @@ public class ReadUDP : MonoBehaviour
 				string data2utf8 = utf8.GetString(data2);	// dec string
 				data1float = float.Parse(data1utf8); 		// float
 				data2float = float.Parse(data2utf8);		// float
+
 				print("Data1hex : " + data1hex);
 				print("Data1dec : " + data1utf8);
 				print("Data1f : " + data1float);
