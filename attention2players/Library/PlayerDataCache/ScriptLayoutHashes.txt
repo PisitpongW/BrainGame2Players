@@ -1,6 +1,6 @@
 WindowsStandalone
 PlayerPath?
-D:/Work/BCI/EqualAbility/BrainGame2Players/attention2players/attention2players.exe
+D:/Work/BCI/EqualAbility/BrainGame2Players/attention2players/Cube Fighting/Cube Fighting.exe
 SceneListBegin?
 Assets/Scenes/SampleScene.unity
 SceneListEnd?
